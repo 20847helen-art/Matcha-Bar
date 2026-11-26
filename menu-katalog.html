@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Matcha Bar — Menu Katalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+<style>
+/* ========== TOKENS ========== */
+:root{
+  --primary:#14422e;--primary-container:#2d5a44;--on-primary:#fff;
+  --secondary:#4c6358;--secondary-container:#cee9da;--on-secondary-container:#52695e;
+  --tertiary:#54330c;--tertiary-container:#6e4921;--on-tertiary:#fff;--on-tertiary-container:#eebb89;
+  --surface:#fcf9f8;--surface-low:#f6f3f2;--surface-container:#f0eded;
+  --surface-container-lowest:#fff;--surface-container-high:#eae7e7;
+  --on-surface:#1c1b1b;--on-surface-variant:#414943;--outline:#717973;--outline-variant:#c0c9c1;
+  --primary-fixed-dim:#a1d1b5;--tertiary-fixed:#ffdcbd;--tertiary-fixed-dim:#f0bd8b;
+  --font-serif:"Newsreader",Georgia,serif;
+  --font-sans:"Manrope",system-ui,sans-serif;
+  --sp-xs:.25rem;--sp-sm:.5rem;--sp-md:1rem;--sp-lg:1.5rem;--sp-xl:2.5rem;
+  --r-lg:.25rem;--r-xl:.5rem;--shadow-sm:0 1px 3px rgba(0,0,0,.06);
+  --shadow-md:0 4px 12px rgba(0,0,0,.08);--shadow-lg:0 10px 24px rgba(0,0,0,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--surface);color:var(--on-surface);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+ul{list-style:none}
+.material-symbols-outlined{font-family:"Material Symbols Outlined";font-weight:normal;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:"liga";-webkit-font-smoothing:antialiased;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24}
+.material-symbols-outlined.filled{font-variation-settings:'FILL' 1}
+
+/* ========== LAYOUT ========== */
+.container{max-width:1280px;margin:0 auto;padding:0 1.25rem}
+@media(min-width:768px){.container{padding:0 3rem}}
+main{padding-top:80px;min-height:calc(100vh - 80px)}
+.section{padding:2.5rem 0}
+.section-tight{padding:1rem 0 2.5rem}
+.hidden{display:none !important}
+
+/* ========== HEADER ========== */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(252,249,248,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 8px rgba(0,0,0,.03)}
+.header-inner{height:80px;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+.brand{display:flex;align-items:center;gap:.5rem}
+.brand-icon{width:40px;height:40px;border-radius:var(--r-xl);background:var(--surface-container);display:flex;align-items:center;justify-content:center;color:var(--primary);transition:background .2s}
+.brand:hover .brand-icon{background:var(--secondary-container)}
+.brand-text{display:flex;flex-direction:column}
+.brand-name{font-family:var(--font-serif);font-size:1.25rem;color:var(--primary);font-weight:500;letter-spacing:-.01em}
+.brand-subtitle{font-size:.6875rem;letter-spacing:.06em;color:var(--on-surface-variant);text-transform:uppercase}
+.main-nav{display:none;align-items:center;gap:.5rem;background:var(--surface-low);padding:.25rem;border-radius:var(--r-xl)}
+@media(min-width:1280px){.main-nav{display:flex}}
+.nav-link{padding:.25rem 1rem;border-radius:var(--r-xl);font-size:.75rem;letter-spacing:.04em;font-weight:600;color:var(--on-surface-variant);transition:all .2s}
+.nav-link:hover{color:var(--on-surface);background:var(--surface-container)}
+.nav-link.active{color:var(--primary);font-weight:700;background:var(--surface-container)}
+.header-actions{display:flex;align-items:center;gap:.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.25rem;padding:.25rem 1rem;border-radius:var(--r-xl);font-size:.75rem;letter-spacing:.04em;font-weight:600;transition:all .2s;white-space:nowrap}
+.btn-outline{color:var(--primary);background:var(--surface-container);display:none}
+@media(min-width:640px){.btn-outline{display:inline-flex}}
+.btn-outline:hover{background:var(--surface-container-high);color:var(--on-surface)}
+.btn-primary{color:var(--on-primary);background:var(--primary-container);box-shadow:0 1px 4px rgba(20,66,46,.15)}
+.btn-primary:hover{background:var(--primary)}
+.avatar{width:32px;height:32px;border-radius:9999px;background:var(--primary);display:flex;align-items:center;justify-content:center;color:var(--on-primary);margin-left:.25rem}
+.avatar .material-symbols-outlined{font-size:18px}
+
+/* ========== HERO ========== */
+.mcat-hero{padding:2.5rem 0 1.5rem}
+.mcat-hero-row{display:flex;flex-direction:column;gap:1.5rem;padding-bottom:1.5rem}
+@media(min-width:1024px){.mcat-hero-row{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+.mcat-hero-text{display:flex;flex-direction:column;gap:.25rem;max-width:42rem}
+.mcat-badge-row{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap}
+.mcat-badge{padding:.25rem .5rem;border-radius:var(--r-lg);font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;background:var(--secondary-container);color:var(--on-secondary-container);font-weight:600}
+.mcat-badge-meta{font-size:.6875rem;letter-spacing:.06em;color:var(--outline)}
+.mcat-title{font-family:var(--font-serif);font-size:clamp(2rem,3.5vw,2.75rem);line-height:1.15;letter-spacing:-.01em;color:var(--primary);font-weight:500}
+.mcat-desc{font-size:1rem;line-height:1.6;color:var(--on-surface-variant)}
+.mcat-desc em{font-style:italic;color:var(--primary)}
+.mcat-floor-pill{display:flex;align-items:center;gap:1rem;background:var(--surface-low);border-radius:var(--r-xl);padding:1rem;box-shadow:var(--shadow-sm);flex-shrink:0;flex-wrap:wrap}
+.mcat-floor-item{display:flex;flex-direction:column;gap:.25rem}
+.mcat-floor-head{display:flex;align-items:center;gap:6px}
+.dot-pulse{width:8px;height:8px;border-radius:9999px;background:var(--primary);animation:pulseDot 2s infinite}
+.dot-solid{width:8px;height:8px;border-radius:9999px;background:var(--secondary)}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.9)}}
+.mcat-floor-label{font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.mcat-floor-label.primary{color:var(--primary)}
+.mcat-floor-label.secondary{color:var(--secondary)}
+.mcat-floor-text{font-size:.875rem;color:var(--on-surface)}
+.mcat-floor-text.muted{color:var(--on-surface-variant)}
+.mcat-floor-div{width:1px;height:32px;background:rgba(192,201,193,.5)}
+
+/* ========== TABS ========== */
+.mcat-tabs{display:flex;gap:.25rem;overflow-x:auto;padding:.25rem 0}
+.mcat-tabs::-webkit-scrollbar{display:none}
+.mcat-tab{padding:.25rem 1rem;border-radius:var(--r-lg);font-size:.75rem;letter-spacing:.04em;font-weight:600;white-space:nowrap;background:var(--surface-low);color:var(--on-surface-variant);transition:all .2s}
+.mcat-tab:hover{background:var(--surface-container);color:var(--on-surface)}
+.mcat-tab.active{background:var(--primary);color:var(--on-primary);box-shadow:var(--shadow-sm)}
+
+/* ========== MENU GRID ========== */
+.mcat-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:768px){.mcat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.mcat-grid{grid-template-columns:repeat(12,1fr)}.mcat-card.span-4{grid-column:span 4}.mcat-card.span-6{grid-column:span 6}}
+.mcat-card{background:var(--surface-container-lowest);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-sm);transition:all .3s;display:flex;flex-direction:column;justify-content:space-between}
+.mcat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.mcat-card-img{position:relative;width:100%;height:14rem;background:var(--surface-low);overflow:hidden}
+.mcat-card-img.tall{height:16rem}
+.mcat-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.mcat-card:hover .mcat-card-img img{transform:scale(1.05)}
+.mcat-card-badges{position:absolute;top:.5rem;left:.5rem;display:flex;flex-wrap:wrap;gap:4px}
+.mcat-badge-sm{padding:2px .5rem;border-radius:var(--r-lg);font-size:.6875rem;letter-spacing:.04em;font-weight:500;background:rgba(252,249,248,.9);backdrop-filter:blur(6px);color:var(--primary);white-space:nowrap}
+.mcat-badge-sm.primary{background:var(--primary);color:var(--on-primary)}
+.mcat-badge-sm.tertiary{background:var(--tertiary);color:var(--on-tertiary)}
+.mcat-card-body{padding:1.5rem;display:flex;flex-direction:column;gap:.5rem}
+.mcat-card-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.mcat-card-title{font-family:var(--font-serif);font-size:1.25rem;line-height:1.75rem;color:var(--primary);font-weight:500}
+.mcat-card-price{font-family:var(--font-serif);font-size:1.25rem;line-height:1.75rem;color:var(--tertiary);font-weight:600;white-space:nowrap}
+.mcat-card-desc{font-size:.875rem;line-height:1.4;color:var(--on-surface-variant)}
+.mcat-card-tags{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.25rem}
+.mcat-tag{padding:2px .5rem;border-radius:var(--r-lg);font-size:.6875rem;letter-spacing:.04em;font-weight:500;background:var(--surface-container);color:var(--on-surface-variant)}
+.mcat-tag.secondary{background:var(--secondary-container);color:var(--on-secondary-container)}
+.mcat-card-foot{padding:0 1.5rem 1.5rem}
+.mcat-btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.25rem;padding:.625rem 1rem;border-radius:var(--r-lg);font-size:.75rem;letter-spacing:.04em;font-weight:600;color:var(--on-primary);background:var(--primary-container);box-shadow:var(--shadow-sm);transition:background .2s}
+.mcat-btn:hover{background:var(--primary)}
+.mcat-btn .material-symbols-outlined{font-size:18px}
+
+/* ========== CUSTOMIZER ========== */
+.mcat-customizer{background:var(--surface-low);padding:2.5rem 0}
+.mcat-cust-header{display:flex;flex-direction:column;gap:.25rem;margin-bottom:1.5rem}
+.mcat-cust-eyebrow{display:flex;align-items:center;gap:.25rem;color:var(--primary);font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600}
+.mcat-cust-eyebrow .material-symbols-outlined{font-size:20px}
+.mcat-cust-title{font-family:var(--font-serif);font-size:clamp(1.75rem,3vw,2.25rem);line-height:1.2;color:var(--primary);font-weight:500}
+.mcat-cust-desc{font-size:1rem;line-height:1.6;color:var(--on-surface-variant);max-width:42rem}
+.mcat-cust-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:start}
+@media(min-width:1024px){.mcat-cust-grid{grid-template-columns:repeat(12,1fr)}.mcat-cust-controls{grid-column:span 8}.mcat-cust-summary{grid-column:span 4}}
+.mcat-cust-controls{background:var(--surface-container-lowest);border-radius:var(--r-xl);padding:1.5rem;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:1.5rem}
+.mcat-cust-selected{display:flex;align-items:center;justify-content:space-between;padding:1rem;background:var(--surface-low);border-radius:var(--r-lg);gap:1rem;flex-wrap:wrap}
+.mcat-cust-selected>div{display:flex;flex-direction:column;gap:2px}
+.mcat-cust-sel-label{font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;color:var(--on-surface-variant)}
+.mcat-cust-sel-name{font-family:var(--font-serif);font-size:1.25rem;color:var(--primary);font-weight:500}
+.mcat-cust-sel-price{font-size:.875rem;letter-spacing:.02em;color:var(--tertiary);font-weight:600}
+.mcat-cust-group{display:flex;flex-direction:column;gap:.5rem}
+.mcat-cust-group-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.mcat-cust-group-label{font-size:.875rem;letter-spacing:.02em;color:var(--on-surface);font-weight:600;display:flex;align-items:center;gap:6px}
+.mcat-cust-group-label .material-symbols-outlined{font-size:18px;color:var(--primary)}
+.mcat-cust-group-note{font-size:.6875rem;letter-spacing:.06em;color:var(--on-surface-variant)}
+.mcat-cust-options{display:grid;grid-template-columns:1fr;gap:.5rem}
+@media(min-width:640px){.mcat-cust-options{grid-template-columns:repeat(2,1fr)}.mcat-cust-options.grid-4{grid-template-columns:repeat(4,1fr)}}
+.mcat-opt{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:1rem;border-radius:var(--r-lg);text-align:left;background:var(--surface-low);color:var(--on-surface);transition:all .2s}
+.mcat-opt:hover{background:var(--surface-container)}
+.mcat-opt.active{background:var(--primary);color:var(--on-primary)}
+.mcat-opt.center{flex-direction:column;text-align:center;padding:.5rem}
+.mcat-opt.with-icon{justify-content:flex-start;align-items:flex-start}
+.mcat-opt.with-icon .material-symbols-outlined{color:var(--primary);flex-shrink:0;margin-top:2px}
+.mcat-opt.with-icon.active .material-symbols-outlined{color:var(--on-primary)}
+.mcat-opt>div{display:flex;flex-direction:column;gap:2px;flex:1}
+.mcat-opt-name{font-size:.75rem;letter-spacing:.04em;font-weight:600}
+.mcat-opt-desc{font-size:.75rem;line-height:1.4;opacity:.85}
+.mcat-opt-price{font-size:.6875rem;letter-spacing:.06em;color:var(--tertiary);font-weight:600;white-space:nowrap}
+.mcat-opt.active .mcat-opt-price{color:var(--on-primary)}
+.mcat-cust-summary{background:var(--surface-container-lowest);border-radius:var(--r-xl);padding:1.5rem;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:1rem}
+@media(min-width:1024px){.mcat-cust-summary{position:sticky;top:6rem}}
+.mcat-cust-summary-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding-bottom:.5rem;flex-wrap:wrap}
+.mcat-cust-summary-title{font-family:var(--font-serif);font-size:1.25rem;color:var(--primary);font-weight:500}
+.mcat-cust-summary-badge{padding:2px .5rem;border-radius:var(--r-lg);font-size:.6875rem;background:var(--secondary-container);color:var(--on-secondary-container);font-weight:600}
+.mcat-summary-rows{display:flex;flex-direction:column;gap:.25rem}
+.mcat-summary-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-size:.875rem}
+.rl{color:var(--on-surface-variant)}
+.rl.strong{color:var(--on-surface);font-weight:500}
+.rv{color:var(--on-surface-variant)}
+.mcat-total{background:var(--surface-low);border-radius:var(--r-lg);padding:1rem;display:flex;flex-direction:column;gap:.25rem}
+.mcat-total-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.mcat-total-label{font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;color:var(--on-surface-variant);font-weight:600}
+.mcat-total-value{font-family:var(--font-serif);font-size:1.5rem;color:var(--primary);font-weight:600}
+.mcat-total-note{font-size:.6875rem;color:var(--on-surface-variant)}
+.mcat-cust-actions{display:flex;flex-direction:column;gap:.25rem}
+.mcat-cust-btn{display:flex;width:100%;align-items:center;justify-content:center;gap:.25rem;padding:.75rem 1rem;border-radius:var(--r-lg);font-size:.75rem;letter-spacing:.04em;font-weight:600;color:var(--on-primary);background:var(--primary);transition:background .2s}
+.mcat-cust-btn:hover{background:var(--primary-container)}
+.mcat-cust-btn.success{background:var(--primary-container)}
+.mcat-cust-btn .material-symbols-outlined{font-size:20px}
+.mcat-cust-actions-note{font-size:.6875rem;line-height:1.4;color:var(--on-surface-variant);text-align:center}
+
+/* ========== GIFT BANNER ========== */
+.mcat-gift{background:var(--primary);color:var(--on-primary);border-radius:var(--r-xl);overflow:hidden;position:relative;box-shadow:var(--shadow-md)}
+.mcat-gift-glow{position:absolute;right:-5rem;bottom:-5rem;width:24rem;height:24rem;border-radius:9999px;background:rgba(161,209,181,.1);filter:blur(60px);pointer-events:none}
+.mcat-gift-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:center;padding:1.5rem;position:relative;z-index:10}
+@media(min-width:768px){.mcat-gift-grid{padding:2.5rem}}
+@media(min-width:1024px){.mcat-gift-grid{grid-template-columns:repeat(12,1fr)}.mcat-gift-content{grid-column:span 7}.mcat-gift-visual{grid-column:span 5}}
+.mcat-gift-content{display:flex;flex-direction:column;gap:1rem}
+.mcat-gift-badges{display:flex;align-items:center;gap:.25rem;flex-wrap:wrap}
+.mcat-gift-badge{padding:.25rem .5rem;border-radius:var(--r-lg);font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600;background:var(--tertiary-container);color:var(--on-tertiary-container)}
+.mcat-gift-note{font-size:.6875rem;letter-spacing:.06em;color:var(--primary-fixed-dim)}
+.mcat-gift-title{font-family:var(--font-serif);font-size:clamp(1.75rem,3vw,2.25rem);line-height:1.2;color:var(--on-primary);font-weight:500}
+.mcat-gift-desc{font-size:1rem;line-height:1.6;color:rgba(255,255,255,.85);max-width:36rem}
+.mcat-gift-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;padding-top:.25rem}
+.mcat-gift-price-block{display:flex;flex-direction:column;gap:2px}
+.mcat-gift-price-label{font-size:.6875rem;text-transform:uppercase;letter-spacing:.06em;color:var(--primary-fixed-dim)}
+.mcat-gift-price{font-family:var(--font-serif);font-size:1.5rem;color:var(--on-primary);font-weight:600}
+.mcat-gift-price-strike{font-family:var(--font-sans);font-size:.875rem;color:rgba(255,255,255,.5);text-decoration:line-through;font-weight:400;margin-left:.25rem}
+.mcat-gift-btn{display:inline-flex;align-items:center;gap:.25rem;padding:.625rem 1.5rem;border-radius:var(--r-lg);font-size:.75rem;letter-spacing:.04em;font-weight:600;background:var(--surface);color:var(--primary);box-shadow:var(--shadow-sm);transition:background .2s}
+.mcat-gift-btn:hover{background:var(--surface-container)}
+.mcat-gift-btn .material-symbols-outlined{font-size:18px}
+.mcat-gift-visual{width:100%}
+.mcat-gift-img{position:relative;width:100%;height:18rem;border-radius:var(--r-lg);overflow:hidden;background:rgba(45,90,68,.4)}
+.mcat-gift-img img{width:100%;height:100%;object-fit:cover}
+.mcat-gift-img-badge{position:absolute;bottom:.5rem;right:.5rem;padding:4px .5rem;border-radius:var(--r-lg);font-size:.6875rem;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);color:var(--primary);font-weight:600}
+
+/* ========== FOOTER ========== */
+.site-footer{background:var(--surface-low);margin-top:2.5rem;box-shadow:0 -1px 6px rgba(0,0,0,.02)}
+.footer-inner{padding:2.5rem 0 1.5rem}
+.footer-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;padding-bottom:2.5rem}
+@media(min-width:768px){.footer-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.footer-grid{grid-template-columns:repeat(12,1fr)}.footer-col-brand{grid-column:span 4}.footer-col-info{grid-column:span 3}.footer-col-nav{grid-column:span 2}.footer-col-news{grid-column:span 3}}
+.footer-col{display:flex;flex-direction:column;gap:.5rem}
+.footer-brand{display:flex;align-items:center;gap:.5rem}
+.footer-brand-icon{width:36px;height:36px;border-radius:var(--r-xl);background:var(--surface-container);display:flex;align-items:center;justify-content:center;color:var(--primary)}
+.footer-brand-icon .material-symbols-outlined{font-size:20px}
+.footer-brand-name{font-family:var(--font-serif);font-size:1.25rem;color:var(--primary);font-weight:500}
+.footer-text{font-size:.875rem;line-height:1.4;color:var(--on-surface-variant);max-width:24rem}
+.footer-tags{display:flex;gap:.25rem;flex-wrap:wrap}
+.footer-tag{padding:.25rem .5rem;border-radius:var(--r-lg);font-size:.6875rem;letter-spacing:.06em;background:var(--surface-container-high);color:var(--on-surface-variant)}
+.footer-heading{font-size:.875rem;letter-spacing:.02em;color:var(--on-surface);font-weight:600}
+.footer-info-block{display:flex;flex-direction:column;gap:.25rem;margin-top:.25rem}
+.footer-info-label{font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;color:var(--on-surface-variant)}
+.footer-info-value{font-size:.875rem;color:var(--on-surface)}
+.footer-links{display:flex;flex-direction:column;gap:.25rem}
+.footer-link{font-size:.875rem;color:var(--on-surface-variant);transition:color .2s}
+.footer-link:hover{color:var(--on-surface)}
+.newsletter-form{display:flex;flex-direction:column;gap:.25rem;margin-top:.25rem}
+.newsletter-row{display:flex;gap:.25rem}
+.newsletter-input{width:100%;background:var(--surface-container-lowest);padding:.25rem 1rem;border-radius:var(--r-xl);font-size:.875rem;color:var(--on-surface);border:none;outline:none;box-shadow:var(--shadow-sm)}
+.newsletter-input::placeholder{color:var(--outline)}
+.btn-sm{padding:.375rem 1rem;font-size:.75rem}
+.footer-bottom{padding-top:1rem;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:.5rem;color:var(--on-surface-variant)}
+@media(min-width:640px){.footer-bottom{flex-direction:row}}
+.footer-copy{font-size:.875rem}
+.footer-legal{display:flex;gap:1rem;align-items:center}
+.footer-legal-link{font-size:.6875rem;letter-spacing:.06em;cursor:pointer}
+.footer-location{font-size:.6875rem;letter-spacing:.06em}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-icon"><span class="material-symbols-outlined">eco</span></span>
+      <span class="brand-text"><span class="brand-name">Matcha Bar</span><span class="brand-subtitle">Uji, Kyoto • 2-Storey</span></span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="filosofi.html" class="nav-link">Filosofi</a>
+      <a href="about-dan-tim.html" class="nav-link">About &amp; Tim</a>
+      <a href="menu-katalog.html" class="nav-link active">Menu Katalog</a>
+      <a href="testimoni.html" class="nav-link">Testimoni</a>
+    </nav>
+    <div class="header-actions">
+      <a href="lokasi-ruko.html" class="btn btn-outline">Lokasi Ruko</a>
+      <a href="pesan-online.html" class="btn btn-primary">Pesan Online</a>
+      <div class="avatar"><span class="material-symbols-outlined">person</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<div class="page-wrapper">
+
+<section class="mcat-hero">
+  <div class="container">
+    <div class="mcat-hero-row">
+      <div class="mcat-hero-text">
+        <div class="mcat-badge-row">
+          <span class="mcat-badge">Kurasi Teh &amp; Pastry Otentik</span>
+          <span class="mcat-badge-meta">• Harvest First Flush 2026</span>
+        </div>
+        <h1 class="mcat-title">Katalog Menu &amp; Kustomisasi</h1>
+        <p class="mcat-desc">Setiap seduhan dibuat langsung <em>fresh to order</em> menggunakan bubuk Uji ceremonial grade terbaik. Nikmati ketenangan rasa di Lt. 01 Tea Bar atau Lt. 02 Mezzanine Tatami kami.</p>
+      </div>
+      <div class="mcat-floor-pill">
+        <div class="mcat-floor-item">
+          <div class="mcat-floor-head"><span class="dot-pulse"></span><span class="mcat-floor-label primary">Lt. 01 Bar</span></div>
+          <span class="mcat-floor-text">5 Bangku Tersedia</span>
+        </div>
+        <div class="mcat-floor-div"></div>
+        <div class="mcat-floor-item">
+          <div class="mcat-floor-head"><span class="dot-solid"></span><span class="mcat-floor-label secondary">Lt. 02 Tatami</span></div>
+          <span class="mcat-floor-text muted">Suasana Hening (Calm)</span>
+        </div>
+      </div>
+    </div>
+    <div class="mcat-tabs" id="categoryTabs">
+      <button class="mcat-tab active" data-category="all" type="button">Semua Menu</button>
+      <button class="mcat-tab" data-category="ceremonial" type="button">Ceremonial Series</button>
+      <button class="mcat-tab" data-category="fusion" type="button">Fusion &amp; Cold Foam</button>
+      <button class="mcat-tab" data-category="pastry" type="button">Artisan Pastry &amp; Dessert</button>
+    </div>
+  </div>
+</section>
+
+<section class="section section-tight">
+  <div class="container">
+    <div class="mcat-grid" id="menuGrid">
+
+      <article class="mcat-card span-4" data-item-category="ceremonial">
+        <div class="mcat-card-img">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3BifWWheHA68R3klIIaqYea9gco0CLUDfRsiO6frlseujRuFzdJxIeMlyw5z_P6m582gX4wls96jjCz_MO7JTkbUuoTPwFsF-xyEmwbbBkH2WdnOVTpyNIbqaKG_0yXF1z_ehBBjmvA_T0ECdPhzMNp_2S9wZmtgh1Iu4FgtEsmaEH5rbKNKZGxdDaUkHyqm5TRApT_w4eKpFpQPzMEiHzUoQvWqAL_P6NuVDaz_2Jj0sWKIO0r097A" alt="Ceremonial Pure Matcha">
+          <div class="mcat-card-badges"><span class="mcat-badge-sm">UJI • FIRST FLUSH</span><span class="mcat-badge-sm primary">Single Origin</span></div>
+        </div>
+        <div class="mcat-card-body">
+          <div class="mcat-card-head"><h2 class="mcat-card-title">Ceremonial Pure Matcha</h2><span class="mcat-card-price">Rp 48.000</span></div>
+          <p class="mcat-card-desc">Matcha Uji single origin diseduh murni dengan air 80°C. Rasa umami pekat, vegetal manis alami, zero sugar.</p>
+          <div class="mcat-card-tags"><span class="mcat-tag secondary">Vegan</span><span class="mcat-tag">Gluten-Free</span></div>
+        </div>
+        <div class="mcat-card-foot">
+          <button class="mcat-btn" onclick="openCustomizer('Ceremonial Pure Matcha','Rp 48.000')" type="button"><span>Kustomisasi / Pesan</span><span class="material-symbols-outlined">tune</span></button>
+        </div>
+      </article>
+
+      <article class="mcat-card span-4" data-item-category="ceremonial">
+        <div class="mcat-card-img">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4WyY93r923LlJyPaHAXbG1CCm9miBinikrKlhZiRpdbrNCGH2FeGfYfVSAvEhBPMZH22hetIDXy1HQPq5EjSrmpjipC2-to5-x6MX82o-FdlSVvo78KPg498vrE-XplO8vw0nj7KvavlgxjW2FaWKcLNmuCUnApAihHMtw2ty0dT4kQ9dJocGZ-L4b2p4LFLnbm3mx4-PGEUNMLNRKDeDsGrexzzxpGjGs545xrfmvelWaqIPE88q9Q" alt="Signature Matcha Latte">
+          <div class="mcat-card-badges"><span class="mcat-badge-sm">HOUSE BLEND</span></div>
+        </div>
+        <div class="mcat-card-body">
+          <div class="mcat-card-head"><h2 class="mcat-card-title">Signature Matcha Latte</h2><span class="mcat-card-price">Rp 38.000</span></div>
+          <p class="mcat-card-desc">Perpaduan seimbang ceremonial matcha dengan susu pilihan. Creamy, silky, dan menenangkan jiwa.</p>
+          <div class="mcat-card-tags"><span class="mcat-tag">Dairy / Plant-Milk Option</span></div>
+        </div>
+        <div class="mcat-card-foot">
+          <button class="mcat-btn" onclick="openCustomizer('Signature Matcha Latte','Rp 38.000')" type="button"><span>Kustomisasi / Pesan</span><span class="material-symbols-outlined">tune</span></button>
+        </div>
+      </article>
+
+      <article class="mcat-card span-4" data-item-category="fusion">
+        <div class="mcat-card-img">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG95Pr_Pb8vdBBMq1h-N8E-4fcj9UtlD0nYHTHpwFai1pbKsgHsyGCMFTkBD6aDb6pYVzSpYofZyjjRKVQ0Wwb652DZ0k_ni0ldTNRPMqiTlzMEFXU4XO7SDZUiZPP9qXti8vdrtuFSo1B4ZbhGgJcFgLVYz9Tx3FlwrebXfGJ8ZjDq-L0zkabaG7b7nRZ9vgL75iAd845zIi13OXDmnd-XBzHBdtgaGodIgZsRmOV6ozaYvS2XROG7A" alt="Strawberry Matcha Cold Foam">
+          <div class="mcat-card-badges"><span class="mcat-badge-sm tertiary">BEST SELLER</span></div>
+        </div>
+        <div class="mcat-card-body">
+          <div class="mcat-card-head"><h2 class="mcat-card-title">Strawberry Matcha Cold Foam</h2><span class="mcat-card-price">Rp 38.000</span></div>
+          <p class="mcat-card-desc">House-made strawberry compote segar dengan susu lembut dilapisi cold foam matcha tebal bertekstur awan.</p>
+          <div class="mcat-card-tags"><span class="mcat-tag secondary">Signature Fusion</span><span class="mcat-tag">Iced Only</span></div>
+        </div>
+        <div class="mcat-card-foot">
+          <button class="mcat-btn" onclick="openCustomizer('Strawberry Matcha Cold Foam','Rp 38.000')" type="button"><span>Kustomisasi / Pesan</span><span class="material-symbols-outlined">tune</span></button>
+        </div>
+      </article>
+
+      <article class="mcat-card span-6" data-item-category="fusion">
+        <div class="mcat-card-img tall">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbABqtPiQkrrAqIbwhMIgqAeK0m1Tqdm2kTxxbPw_nXQY5-Bo9gr1sD60t_pIlLfeOqi1Rsd-E1oR2ZQNC3HxmJj5qeugEyFcYU4nG95rg6kQlqFFrc6nmzrLIECclUQC4ZF3n7IduZqH3sY3a6H8oxCNTMyFl5k2HIbJ2iSHGAFyVl8i_koTZuNA9Z7yFdAehyDw9KUkxrI74kLC-h9ai8AhLdwsCVQC1aZrx7QI0eLhRPcx-ExWfdg" alt="Espresso Matcha Fusion">
+          <div class="mcat-card-badges"><span class="mcat-badge-sm">DIRTY MATCHA</span></div>
+        </div>
+        <div class="mcat-card-body">
+          <div class="mcat-card-head"><h2 class="mcat-card-title">Espresso Matcha Fusion</h2><span class="mcat-card-price">Rp 35.000</span></div>
+          <p class="mcat-card-desc">Double shot Arabica cold brew dipadu lembut dengan ceremonial matcha dan velvety milk. Rasa earthy dan bold berpadu harmonis.</p>
+          <div class="mcat-card-tags"><span class="mcat-tag">High Caffeine</span><span class="mcat-tag secondary">Arabica Blend</span></div>
+        </div>
+        <div class="mcat-card-foot">
+          <button class="mcat-btn" onclick="openCustomizer('Espresso Matcha Fusion','Rp 35.000')" type="button"><span>Kustomisasi / Pesan</span><span class="material-symbols-outlined">tune</span></button>
+        </div>
+      </article>
+
+      <article class="mcat-card span-6" data-item-category="pastry">
+        <div class="mcat-card-img tall">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAznMQULZ5tHRhqCXQ2i_TELepclbWcaTpXFAB829K0eoftABQV7Zv_ZJ5skb0sTCA5V8Rfdfnm7Ps3ayVpX57qHaBgem5YG4VhgCpnjE2P-zI6eRWQKY9oAx7CUM4w3WAcjzb-5BR3po_AyNQP9-ma-bMpnotll_jx_u-v0VTTwlNmTOQsB5ic6QelYboYWYrV4kbieT4VDF3P4jnWWE7WxJhMFecp-y2abxcUOFDzv75Ndy8qTz5UbQ" alt="Matcha Basque Burnt Cheesecake">
+          <div class="mcat-card-badges"><span class="mcat-badge-sm">FRESH BAKED DAILY</span></div>
+        </div>
+        <div class="mcat-card-body">
+          <div class="mcat-card-head"><h2 class="mcat-card-title">Matcha Basque Burnt Cheesecake</h2><span class="mcat-card-price">Rp 42.000</span></div>
+          <p class="mcat-card-desc">Kue keju panggang lembut berpadu matcha Uji dengan lelehan molten lumer di tengah. Gurih, manis sedang, aroma panggangan harum.</p>
+          <div class="mcat-card-tags"><span class="mcat-tag">Contains Dairy</span><span class="mcat-tag">Gluten-Free Flour</span></div>
+        </div>
+        <div class="mcat-card-foot">
+          <button class="mcat-btn" onclick="openPastryOrder('Matcha Basque Burnt Cheesecake','Rp 42.000')" type="button"><span>Pesan Pastry</span><span class="material-symbols-outlined">add_shopping_cart</span></button>
+        </div>
+      </article>
+
+      <article class="mcat-card span-6" data-item-category="pastry">
+        <div class="mcat-card-img tall">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuASSXW9hNrjiGlrdI8nm_4vRQNzQyjo3SXyxDXXhzhFLQz1eLA7LQnvcaINdWMm8wqdvbzuJYOZLzqXCMF_FLOwrT8SzY2NCEXgPEiXfFvteuQcov24gaqjDnWDaJkVGKBFBFe4PjLM5-2ergelfqK4r8ivRK9C4VWYL7XPk4jLBJX_DNlrLzbBUbAIxav_TnuroPCXf5q3375e5efSaCYbz0NFlGi2pJGW0lP0B3raknb8OIhXBVQWTw" alt="Artisan Matcha Croissant">
+          <div class="mcat-card-badges"><span class="mcat-badge-sm">FRENCH BUTTER</span></div>
+        </div>
+        <div class="mcat-card-body">
+          <div class="mcat-card-head"><h2 class="mcat-card-title">Artisan Matcha Croissant</h2><span class="mcat-card-price">Rp 28.000</span></div>
+          <p class="mcat-card-desc">Croissant Prancis berlapis renyah dipanggang sempurna dengan isian ganache matcha yang melimpah dan lumer di mulut.</p>
+          <div class="mcat-card-tags"><span class="mcat-tag">Wheat Gluten</span><span class="mcat-tag">Almond Topping</span></div>
+        </div>
+        <div class="mcat-card-foot">
+          <button class="mcat-btn" onclick="openPastryOrder('Artisan Matcha Croissant','Rp 28.000')" type="button"><span>Pesan Pastry</span><span class="material-symbols-outlined">add_shopping_cart</span></button>
+        </div>
+      </article>
+
+      <article class="mcat-card span-6" data-item-category="pastry">
+        <div class="mcat-card-img tall">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCILpxF3MFsh443BC0T1Fif5xUdOdX8qozzza6-HyZ6PJsqjRMki9I4OLKjm_Mk1T2Hb1hkTnl4Fmq8mNQvlkYZXeVe5Y70SJdkoSVt1KS1LlgkFGX9NdPZCl1Zi_FRYCscfeE4qLjk7oKnVZv52UCctdDETCDcPInrpj1i3gTPeOi4_vMGuciU7jxFNYhABe2E4VmBwTeRI8g_pxAIO-IZk9cgq0lGgsoBohvxbTHlgp-zWwzY2T3vAw" alt="Uji Matcha Gelato">
+          <div class="mcat-card-badges"><span class="mcat-badge-sm">3 LEVEL INTENSITAS</span></div>
+        </div>
+        <div class="mcat-card-body">
+          <div class="mcat-card-head"><h2 class="mcat-card-title">Uji Matcha Gelato</h2><span class="mcat-card-price">Single 32k / Dbl 58k</span></div>
+          <p class="mcat-card-desc">Gelato artisanal dengan level kepekatan intens. Pilih Level 1 (Mild &amp; Sweet), Level 2 (Balanced Umami), atau Level 3 (Extreme Ceremonial Umami).</p>
+          <div class="mcat-card-tags"><span class="mcat-tag secondary">Vegetarian</span><span class="mcat-tag">Gluten-Free</span></div>
+        </div>
+        <div class="mcat-card-foot">
+          <button class="mcat-btn" onclick="openGelatoCustomizer()" type="button"><span>Pilih Scoop &amp; Level</span><span class="material-symbols-outlined">icecream</span></button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="mcat-customizer" id="customizationSection">
+  <div class="container">
+    <div class="mcat-cust-header">
+      <div class="mcat-cust-eyebrow"><span class="material-symbols-outlined">tune</span><span>Laboratorium Racikan</span></div>
+      <h2 class="mcat-cust-title">Panel Kustomisasi Seduhan</h2>
+      <p class="mcat-cust-desc">Setiap cangkir disesuaikan dengan preferensi rasa Anda. Ubah pilihan susu, tingkat kemanisan, dan temperatur penyajian untuk melihat kalkulasi harga real-time.</p>
+    </div>
+    <div class="mcat-cust-grid">
+      <div class="mcat-cust-controls">
+        <div class="mcat-cust-selected">
+          <div>
+            <span class="mcat-cust-sel-label">Minuman Terpilih</span>
+            <span class="mcat-cust-sel-name" id="activeDrinkTitle">Signature Matcha Latte</span>
+          </div>
+          <span class="mcat-cust-sel-price" id="activeDrinkBasePrice">Base: Rp 38.000</span>
+        </div>
+        <div class="mcat-cust-group">
+          <div class="mcat-cust-group-head">
+            <label class="mcat-cust-group-label"><span class="material-symbols-outlined">water_drop</span>Pilihan Susu (Milk Base)</label>
+            <span class="mcat-cust-group-note">Pilih satu</span>
+          </div>
+          <div class="mcat-cust-options">
+            <button class="mcat-opt active" data-type="milk" data-name="Fresh Milk (Default)" data-price="0" type="button"><div><div class="mcat-opt-name">Fresh Milk</div><div class="mcat-opt-desc">Pasteurisasi lokal segar (Default)</div></div><span class="mcat-opt-price">+Rp 0</span></button>
+            <button class="mcat-opt" data-type="milk" data-name="Oat Milk" data-price="5000" type="button"><div><div class="mcat-opt-name">Oat Milk</div><div class="mcat-opt-desc">Artisanal Barista Blend</div></div><span class="mcat-opt-price">+Rp 5.000</span></button>
+            <button class="mcat-opt" data-type="milk" data-name="Almond Milk" data-price="5000" type="button"><div><div class="mcat-opt-name">Almond Milk</div><div class="mcat-opt-desc">Nutty &amp; Unsweetened</div></div><span class="mcat-opt-price">+Rp 5.000</span></button>
+            <button class="mcat-opt" data-type="milk" data-name="Soy Milk" data-price="0" type="button"><div><div class="mcat-opt-name">Soy Milk</div><div class="mcat-opt-desc">Velvety &amp; High Protein</div></div><span class="mcat-opt-price">+Rp 0</span></button>
+          </div>
+        </div>
+        <div class="mcat-cust-group">
+          <div class="mcat-cust-group-head">
+            <label class="mcat-cust-group-label"><span class="material-symbols-outlined">opacity</span>Tingkat Kemanisan</label>
+            <span class="mcat-cust-group-note">Sesuai selera</span>
+          </div>
+          <div class="mcat-cust-options grid-4">
+            <button class="mcat-opt center" data-type="sweetness" data-name="Unsweetened (0%)" data-price="0" type="button"><div class="mcat-opt-name">0%</div><div class="mcat-opt-desc">Unsweetened</div></button>
+            <button class="mcat-opt center active" data-type="sweetness" data-name="Less Sweet (30%)" data-price="0" type="button"><div class="mcat-opt-name">30%</div><div class="mcat-opt-desc">Less Sweet</div></button>
+            <button class="mcat-opt center" data-type="sweetness" data-name="Normal (100%)" data-price="0" type="button"><div class="mcat-opt-name">100%</div><div class="mcat-opt-desc">Normal Sweet</div></button>
+            <button class="mcat-opt center" data-type="sweetness" data-name="Stevia / Wild Honey" data-price="3000" type="button"><div class="mcat-opt-name">Alami</div><div class="mcat-opt-desc">Madu (+3k)</div></button>
+          </div>
+        </div>
+        <div class="mcat-cust-group">
+          <div class="mcat-cust-group-head">
+            <label class="mcat-cust-group-label"><span class="material-symbols-outlined">thermostat</span>Temperatur &amp; Wadah Saji</label>
+            <span class="mcat-cust-group-note">Sensasi Minum</span>
+          </div>
+          <div class="mcat-cust-options">
+            <button class="mcat-opt with-icon" data-type="temp" data-name="Hot (Chawan Keramik)" type="button"><span class="material-symbols-outlined">local_cafe</span><div><div class="mcat-opt-name">Hot Seduh Tradisional</div><div class="mcat-opt-desc">Chawan Keramik hangat wabi-sabi.</div></div></button>
+            <button class="mcat-opt with-icon active" data-type="temp" data-name="Iced (Tumbler Estetik)" type="button"><span class="material-symbols-outlined">ac_unit</span><div><div class="mcat-opt-name">Iced Refreshing</div><div class="mcat-opt-desc">Tumbler estetik dengan es kristal.</div></div></button>
+          </div>
+        </div>
+      </div>
+      <div class="mcat-cust-summary">
+        <div class="mcat-cust-summary-head">
+          <h3 class="mcat-cust-summary-title">Ringkasan Racikan</h3>
+          <span class="mcat-cust-summary-badge">Fresh To Order</span>
+        </div>
+        <div class="mcat-summary-rows">
+          <div class="mcat-summary-row"><span class="rl strong" id="summaryDrinkName">Signature Matcha Latte</span><span class="rv" id="summaryBasePrice">Rp 38.000</span></div>
+          <div class="mcat-summary-row"><span class="rl" id="summaryMilk">Fresh Milk (Default)</span><span class="rv" id="summaryMilkPrice">+Rp 0</span></div>
+          <div class="mcat-summary-row"><span class="rl" id="summarySweetness">Less Sweet (30%)</span><span class="rv" id="summarySweetnessPrice">+Rp 0</span></div>
+          <div class="mcat-summary-row"><span class="rl" id="summaryTemp">Iced (Tumbler Estetik)</span><span class="rv">Termasuk</span></div>
+        </div>
+        <div class="mcat-total">
+          <div class="mcat-total-row"><span class="mcat-total-label">Total Pesanan</span><span class="mcat-total-value" id="summaryTotalPrice">Rp 38.000</span></div>
+          <span class="mcat-total-note">Harga sudah termasuk pajak restoran &amp; layanan bar.</span>
+        </div>
+        <div class="mcat-cust-actions">
+          <button class="mcat-cust-btn" id="addToCartBtn" type="button"><span class="material-symbols-outlined">shopping_bag</span><span id="btnText">Tambahkan ke Keranjang</span></button>
+          <p class="mcat-cust-actions-note">Bisa langsung diambil di Tea Bar (Lt. 1) atau diantar ke Mezzanine Tatami (Lt. 2).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="mcat-gift">
+      <div class="mcat-gift-glow"></div>
+      <div class="mcat-gift-grid">
+        <div class="mcat-gift-content">
+          <div class="mcat-gift-badges"><span class="mcat-gift-badge">Omiyage &amp; Hampers Set</span><span class="mcat-gift-note">Edisi Terbatas</span></div>
+          <h2 class="mcat-gift-title">Takeaway Box Set &amp; Bingkisan Tradisi Kyoto</h2>
+          <p class="mcat-gift-desc">Bawa pulang ketenangan Matcha Bar. Setiap kotak dirancang dari kertas washi ramah lingkungan, berisi 1 kaleng Ceremonial Uji Matcha (30g), Chasen bambu 100-prong, dan 2 potong Matcha Burnt Cheesecake.</p>
+          <div class="mcat-gift-actions">
+            <div class="mcat-gift-price-block"><span class="mcat-gift-price-label">Harga Bundling</span><span class="mcat-gift-price">Rp 265.000 <span class="mcat-gift-price-strike">Rp 310.000</span></span></div>
+            <button class="mcat-gift-btn" type="button"><span>Pesan Box Set</span><span class="material-symbols-outlined">arrow_forward</span></button>
+          </div>
+        </div>
+        <div class="mcat-gift-visual">
+          <div class="mcat-gift-img">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfpA9Yo_bLhJ6f3aTSaKLbvtaf29RUtt3gwpVGvEXpqWxYkNyvXqScn0Z34NBsrGDoYc-TWa37spWjY26zuBQhhVr4rpI4OqGPW204tqdonXUqhAH7V_Wl2fk9Ha95Y6ZD3J78NtYUJJ1ytk11PeAEI1L46in2PavvOKKde-t6I6qRp5harqWRmH-ANGZg8bCOp02bC7AKgrJ1j70s5K2AiuZVgzWp1L1-Rl-rka5pOr6B-aNOEBo7cQ" alt="Gift box">
+            <span class="mcat-gift-img-badge">Furoshiki Wrap Termasuk</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col footer-col-brand">
+        <div class="footer-brand"><div class="footer-brand-icon"><span class="material-symbols-outlined">eco</span></div><span class="footer-brand-name">Matcha Bar</span></div>
+        <p class="footer-text">Spesialis ceremonial matcha Uji, Kyoto dalam bangunan ruko mandiri 2 lantai berkonsep Japandi minimalis.</p>
+        <div class="footer-tags"><span class="footer-tag">Lt. 01 Tea Bar</span><span class="footer-tag">Lt. 02 Mezzanine Tatami</span></div>
+      </div>
+      <div class="footer-col footer-col-info">
+        <h3 class="footer-heading">Lokasi &amp; Operasional</h3>
+        <p class="footer-text">Jl. Senopati Asri No. 18, Kebayoran Baru, Jakarta Selatan</p>
+        <div class="footer-info-block"><span class="footer-info-label">Jam Buka</span><span class="footer-info-value">Setiap Hari: 08.00 – 22.00 WIB</span></div>
+      </div>
+      <div class="footer-col footer-col-nav">
+        <h3 class="footer-heading">Navigasi</h3>
+        <ul class="footer-links">
+          <li><a href="index.html" class="footer-link">Home</a></li>
+          <li><a href="filosofi.html" class="footer-link">Filosofi</a></li>
+          <li><a href="about-dan-tim.html" class="footer-link">About &amp; Tim</a></li>
+          <li><a href="menu-katalog.html" class="footer-link">Menu Katalog</a></li>
+          <li><a href="testimoni.html" class="footer-link">Testimoni</a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-news">
+        <h3 class="footer-heading">Warta Matcha &amp; Promo</h3>
+        <p class="footer-text">Dapatkan kurasi panen musiman Uji dan undangan sesi chado eksklusif.</p>
+        <form class="newsletter-form" onsubmit="return false;"><div class="newsletter-row"><input type="email" class="newsletter-input" placeholder="surel@anda.com" required><button type="submit" class="btn btn-primary btn-sm">Kirim</button></div></form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2026 Matcha Bar. Seluruh Hak Cipta Dilindungi.</p>
+      <div class="footer-legal"><span class="footer-legal-link">Privasi</span><span class="footer-legal-link">Ketentuan Layanan</span><span class="footer-location">Jakarta • Kyoto</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var state={drinkName:'Signature Matcha Latte',basePrice:38000,milk:{name:'Fresh Milk (Default)',price:0},sweetness:{name:'Less Sweet (30%)',price:0},temp:'Iced (Tumbler Estetik)'};
+  function fmt(n){return 'Rp '+n.toLocaleString('id-ID');}
+  function updateSummary(){
+    var total=state.basePrice+state.milk.price+state.sweetness.price;
+    document.getElementById('summaryDrinkName').textContent=state.drinkName;
+    document.getElementById('activeDrinkTitle').textContent=state.drinkName;
+    document.getElementById('summaryBasePrice').textContent=fmt(state.basePrice);
+    document.getElementById('activeDrinkBasePrice').textContent='Base: '+fmt(state.basePrice);
+    document.getElementById('summaryMilk').textContent=state.milk.name;
+    document.getElementById('summaryMilkPrice').textContent=state.milk.price>0?'+'+fmt(state.milk.price):'+Rp 0';
+    document.getElementById('summarySweetness').textContent=state.sweetness.name;
+    document.getElementById('summarySweetnessPrice').textContent=state.sweetness.price>0?'+'+fmt(state.sweetness.price):'+Rp 0';
+    document.getElementById('summaryTemp').textContent=state.temp;
+    document.getElementById('summaryTotalPrice').textContent=fmt(total);
+  }
+  document.querySelectorAll('.mcat-tab').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.mcat-tab').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      var cat=btn.getAttribute('data-category');
+      document.querySelectorAll('#menuGrid .mcat-card').forEach(function(card){
+        var c=card.getAttribute('data-item-category');
+        card.classList.toggle('hidden',cat!=='all'&&c!==cat);
+      });
+    });
+  });
+  ['milk','sweetness','temp'].forEach(function(type){
+    document.querySelectorAll('[data-type="'+type+'"]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        document.querySelectorAll('[data-type="'+type+'"]').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active');
+        if(type==='milk')state.milk={name:btn.getAttribute('data-name'),price:parseInt(btn.getAttribute('data-price'),10)};
+        if(type==='sweetness')state.sweetness={name:btn.getAttribute('data-name'),price:parseInt(btn.getAttribute('data-price'),10)};
+        if(type==='temp')state.temp=btn.getAttribute('data-name');
+        updateSummary();
+      });
+    });
+  });
+  window.openCustomizer=function(name,priceStr){
+    state.drinkName=name;
+    state.basePrice=parseInt(priceStr.replace(/[^0-9]/g,''),10);
+    updateSummary();
+    var el=document.getElementById('customizationSection');
+    if(el)el.scrollIntoView({behavior:'smooth'});
+  };
+  window.openPastryOrder=function(name,priceStr){alert('Pilihan pastry '+name+' ('+priceStr+') berhasil ditambahkan ke keranjang santap.');};
+  window.openGelatoCustomizer=function(){alert('Silakan pilih level kepekatan matcha gelato langsung di counter Tea Bar (Lt. 1).');};
+  var addBtn=document.getElementById('addToCartBtn');
+  var btnText=document.getElementById('btnText');
+  if(addBtn){
+    addBtn.addEventListener('click',function(){
+      var orig=btnText.textContent;
+      btnText.textContent='Berhasil Ditambahkan! ✓';
+      addBtn.classList.add('success');
+      setTimeout(function(){btnText.textContent=orig;addBtn.classList.remove('success');},1800);
+    });
+  }
+  updateSummary();
+})();
+</script>
+
+</body>
+</html>
